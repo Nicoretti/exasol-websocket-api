@@ -1,0 +1,1634 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://exasol.github.io/websocket-api/WebsocketAPIV1/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../WebsocketAPIV2/">
+      
+      <link rel="icon" href="../favicon-32x32.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.9">
+    
+    
+      
+        <title>WebsocketAPIV1 - Websocket API</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.0d440cfe.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="black">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#websocket-protocol-v1-details" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Websocket API" class="md-header__button md-logo" aria-label="Websocket API" data-md-component="logo">
+      
+  <img src="../dark-exasol-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Websocket API
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              WebsocketAPIV1
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="black"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3Z"/></svg>
+            </label>
+          
+        
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/exasol/websocket-api" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    websocket-api
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Websocket API" class="md-nav__button md-logo" aria-label="Websocket API" data-md-component="logo">
+      
+  <img src="../dark-exasol-logo.svg" alt="logo">
+
+    </a>
+    Websocket API
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/exasol/websocket-api" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    websocket-api
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Exasol WebSockets API
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          WebsocketAPIV1
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        WebsocketAPIV1
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#websocket-protocol-v1-details" class="md-nav__link">
+    WebSocket protocol v1 details
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    Table of contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#changes" class="md-nav__link">
+    Changes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-summary" class="md-nav__link">
+    Command summary
+  </a>
+  
+    <nav class="md-nav" aria-label="Command summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connection-related-commands" class="md-nav__link">
+    Connection-related commands
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session-related-commands" class="md-nav__link">
+    Session-related commands
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attributes-session-and-database-properties" class="md-nav__link">
+    Attributes: Session and database properties
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-types-type-names-and-properties" class="md-nav__link">
+    Data Types: Type names and properties
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compression" class="md-nav__link">
+    Compression
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#heartbeatfeedback-messages" class="md-nav__link">
+    Heartbeat/Feedback messages
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#subconnections" class="md-nav__link">
+    Subconnections
+  </a>
+  
+    <nav class="md-nav" aria-label="Subconnections">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-create-and-use-subconnections" class="md-nav__link">
+    How to create and use subconnections
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WebsocketAPIV2/" class="md-nav__link">
+        WebsocketAPIV2
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WebsocketAPIV3/" class="md-nav__link">
+        WebsocketAPIV3
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          Commands
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Commands
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/abortQueryV1/" class="md-nav__link">
+        abortQueryV1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/closePreparedStatementV1/" class="md-nav__link">
+        closePreparedStatementV1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/closeResultSetV1/" class="md-nav__link">
+        closeResultSetV1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/createPreparedStatementV1/" class="md-nav__link">
+        createPreparedStatementV1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/disconnectV1/" class="md-nav__link">
+        disconnectV1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/enterParallelV1/" class="md-nav__link">
+        enterParallelV1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/executeBatchV1/" class="md-nav__link">
+        executeBatchV1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/executePreparedStatementV1/" class="md-nav__link">
+        executePreparedStatementV1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/executeV1/" class="md-nav__link">
+        executeV1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/fetchV1/" class="md-nav__link">
+        fetchV1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/getAttributesV1/" class="md-nav__link">
+        getAttributesV1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/getColumnPrivilegesV2/" class="md-nav__link">
+        getColumnPrivilegesV2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/getColumnsV2/" class="md-nav__link">
+        getColumnsV2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/getConnectionsV2/" class="md-nav__link">
+        getConnectionsV2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/getFunctionsV2/" class="md-nav__link">
+        getFunctionsV2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/getHostsV1/" class="md-nav__link">
+        getHostsV1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/getKeywordsV2/" class="md-nav__link">
+        getKeywordsV2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/getOffsetV1/" class="md-nav__link">
+        getOffsetV1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/getPrimaryKeysV2/" class="md-nav__link">
+        getPrimaryKeysV2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/getPropertiesV2/" class="md-nav__link">
+        getPropertiesV2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/getResultSetHeaderV1/" class="md-nav__link">
+        getResultSetHeaderV1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/getRolesV2/" class="md-nav__link">
+        getRolesV2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/getSchemasV2/" class="md-nav__link">
+        getSchemasV2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/getScriptsV2/" class="md-nav__link">
+        getScriptsV2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/getTablePrivilegesV2/" class="md-nav__link">
+        getTablePrivilegesV2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/getTablesV2/" class="md-nav__link">
+        getTablesV2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/getTableTypesV2/" class="md-nav__link">
+        getTableTypesV2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/getTypeInfoV2/" class="md-nav__link">
+        getTypeInfoV2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/getUsersV2/" class="md-nav__link">
+        getUsersV2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/loginTokenV3/" class="md-nav__link">
+        loginTokenV3
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/loginV1/" class="md-nav__link">
+        loginV1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/loginV3/" class="md-nav__link">
+        loginV3
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/setAttributesV1/" class="md-nav__link">
+        setAttributesV1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/subLoginTokenV3/" class="md-nav__link">
+        subLoginTokenV3
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/subLoginV1/" class="md-nav__link">
+        subLoginV1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/subLoginV3/" class="md-nav__link">
+        subLoginV3
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#websocket-protocol-v1-details" class="md-nav__link">
+    WebSocket protocol v1 details
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    Table of contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#changes" class="md-nav__link">
+    Changes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-summary" class="md-nav__link">
+    Command summary
+  </a>
+  
+    <nav class="md-nav" aria-label="Command summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connection-related-commands" class="md-nav__link">
+    Connection-related commands
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session-related-commands" class="md-nav__link">
+    Session-related commands
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attributes-session-and-database-properties" class="md-nav__link">
+    Attributes: Session and database properties
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-types-type-names-and-properties" class="md-nav__link">
+    Data Types: Type names and properties
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compression" class="md-nav__link">
+    Compression
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#heartbeatfeedback-messages" class="md-nav__link">
+    Heartbeat/Feedback messages
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#subconnections" class="md-nav__link">
+    Subconnections
+  </a>
+  
+    <nav class="md-nav" aria-label="Subconnections">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-create-and-use-subconnections" class="md-nav__link">
+    How to create and use subconnections
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+
+  <h1>WebsocketAPIV1</h1>
+
+<h2 id="websocket-protocol-v1-details">WebSocket protocol v1 details</h2>
+<p>WebSocket Protocol v1 requires an Exasol version of at least 6.0.0. It follows the RFC 6455 document of the IETF.</p>
+<p>The Exasol connection server identifies the initial GET request by the client.
+This request contains information about the used protocol version.
+Depending on this information the matching login and protocol class is
+chosen.</p>
+<p>After the handshake the process is identical to a connection using the
+standard drivers like JDBC or ODBC: The connection server listens to
+incoming messages and forwards the requests to the database. </p>
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#changes">Changes</a></li>
+<li><a href="#command-summary">Command summary</a></li>
+<li><a href="#attributes-session-and-database-properties">Attributes: Session and database properties</a></li>
+<li><a href="#data-types-type-names-and-properties">Data Types: Type names and properties</a></li>
+<li><a href="#compression">Compression</a></li>
+<li><a href="#heartbeatfeedback-messages">Heartbeat/Feedback messages</a></li>
+<li><a href="#subconnections">Subconnections</a></li>
+</ul>
+<h2 id="changes">Changes</h2>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Exasol Version</th>
+<th>Change</th>
+<th>Issue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2021.06.22</td>
+<td>7.1.0</td>
+<td>Autocommit was enabled by default for sessions in Exasol 7.1+. See <a href="#attributes-session-and-database-properties">Attributes</a> for details.<br />Autocommit can be disabled in order to restore the previous behavior. Please see the driver's documentation on how to do this.</td>
+<td><a href="https://www.exasol.com/support/browse/EXASOL-2908">EXASOL-2908</a></td>
+</tr>
+<tr>
+<td>2020.03.10</td>
+<td>7.0.0</td>
+<td>Columns of type <code>HASHTYPE</code> must be specified using the <code>CHAR</code> type.</td>
+<td><a href="https://www.exasol.com/support/browse/EXASOL-2643">EXASOL-2643</a></td>
+</tr>
+<tr>
+<td>2020.01.16</td>
+<td>6.2.5<br>6.1.9</td>
+<td>For compatibility reasons, WebSocket logins with a protocol version higher than supported versions will be accepted but automatically downgraded to the latest supported version.</td>
+<td><a href="https://www.exasol.com/support/browse/EXASOL-2614">EXASOL-2614</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="command-summary">Command summary</h2>
+<h3 id="connection-related-commands">Connection-related commands</h3>
+<p>The following commands are used to connect to Exasol, disconnect from Exasol, 
+and query the hosts of an Exasol cluster.</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../commands/disconnectV1/">disconnect</a></td>
+<td>Closes a connection to Exasol</td>
+</tr>
+<tr>
+<td><a href="../commands/enterParallelV1/">enterParallel</a></td>
+<td>Opens subconnections for parallel execution</td>
+</tr>
+<tr>
+<td><a href="../commands/getHostsV1/">getHosts</a></td>
+<td>Gets the hosts in a cluster</td>
+</tr>
+<tr>
+<td><a href="../commands/loginV1/">login</a></td>
+<td>Establishes a connection to Exasol</td>
+</tr>
+<tr>
+<td><a href="../commands/subLoginV1/">subLogin</a></td>
+<td>Establishes a subconnection to Exasol</td>
+</tr>
+</tbody>
+</table>
+<h3 id="session-related-commands">Session-related commands</h3>
+<p>The following commands are used for actions that a user would typically perform after an Exasol 
+session has been established. These commands are responsible for executing queries and statements, 
+reading result sets, and getting and setting session attributes.</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../commands/abortQueryV1/">abortQuery</a></td>
+<td>Aborts a running query</td>
+</tr>
+<tr>
+<td><a href="../commands/closePreparedStatementV1/">closePreparedStatement</a></td>
+<td>Closes a prepared statement</td>
+</tr>
+<tr>
+<td><a href="../commands/closeResultSetV1/">closeResultSet</a></td>
+<td>Closes a result set</td>
+</tr>
+<tr>
+<td><a href="../commands/createPreparedStatementV1/">createPreparedStatement</a></td>
+<td>Creates a prepared statement</td>
+</tr>
+<tr>
+<td><a href="../commands/executeV1/">execute</a></td>
+<td>Executes an SQL statement</td>
+</tr>
+<tr>
+<td><a href="../commands/executeBatchV1/">executeBatch</a></td>
+<td>Executes multiple SQL statements as a batch</td>
+</tr>
+<tr>
+<td><a href="../commands/executePreparedStatementV1/">executePreparedStatement</a></td>
+<td>Executes a prepared statement</td>
+</tr>
+<tr>
+<td><a href="../commands/fetchV1/">fetch</a></td>
+<td>Retrieves data from a result set</td>
+</tr>
+<tr>
+<td><a href="../commands/getAttributesV1/">getAttributes</a></td>
+<td>Gets the session attribute values</td>
+</tr>
+<tr>
+<td><a href="../commands/getOffsetV1/">getOffset</a></td>
+<td>Gets the row offset of a result set</td>
+</tr>
+<tr>
+<td><a href="../commands/getResultSetHeaderV1/">getResultSetHeader</a></td>
+<td>Gets a result set header</td>
+</tr>
+<tr>
+<td><a href="../commands/setAttributesV1/">setAttributes</a></td>
+<td>Sets the given session attribute values</td>
+</tr>
+</tbody>
+</table>
+<h2 id="attributes-session-and-database-properties">Attributes: Session and database properties</h2>
+<p>Attributes can be queried with the <a href="../commands/getAttributesV1/">getAttributes</a> command and some of
+them can be modified with the <a href="../commands/setAttributesV1/">setAttributes</a> command. Modified
+attributes are included in command replies.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>JSON value</th>
+<th>Read-only</th>
+<th>Committable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>autocommit</td>
+<td>true | false</td>
+<td>no</td>
+<td>no</td>
+<td>If true, commit() will be executed automatically after each statement. If false, commit() and rollback() must be executed manually.</td>
+</tr>
+<tr>
+<td>compressionEnabled</td>
+<td>true | false</td>
+<td>yes</td>
+<td>no</td>
+<td>If true, the WebSocket data frame payload data is compressed. If false, it is not compressed.</td>
+</tr>
+<tr>
+<td>currentSchema</td>
+<td>string</td>
+<td>no</td>
+<td>yes</td>
+<td>Current schema name</td>
+</tr>
+<tr>
+<td>dateFormat</td>
+<td>string</td>
+<td>yes</td>
+<td>yes</td>
+<td>Date format</td>
+</tr>
+<tr>
+<td>dateLanguage</td>
+<td>string</td>
+<td>yes</td>
+<td>yes</td>
+<td>Language used for the day and month of dates.</td>
+</tr>
+<tr>
+<td>datetimeFormat</td>
+<td>string</td>
+<td>yes</td>
+<td>yes</td>
+<td>Timestamp format</td>
+</tr>
+<tr>
+<td>defaultLikeEscapeCharacter</td>
+<td>string</td>
+<td>yes</td>
+<td>yes</td>
+<td>Escape character in LIKE expressions.</td>
+</tr>
+<tr>
+<td>feedbackInterval</td>
+<td>number</td>
+<td>no</td>
+<td>no</td>
+<td>Time interval (in seconds) specifying how often heartbeat/feedback packets are sent to the client during query execution.</td>
+</tr>
+<tr>
+<td>numericCharacters</td>
+<td>string</td>
+<td>no</td>
+<td>yes</td>
+<td>Characters specifying the group and decimal separators (NLS_NUMERIC_CHARACTERS). For example, ",." would result in "123,456,789.123".</td>
+</tr>
+<tr>
+<td>openTransaction</td>
+<td>true | false</td>
+<td>yes</td>
+<td>no</td>
+<td>If true, a transaction is open. If false, a transaction is not open.</td>
+</tr>
+<tr>
+<td>queryTimeout</td>
+<td>number</td>
+<td>no</td>
+<td>yes</td>
+<td>Query timeout value (in seconds). If a query runs longer than the specified time, it will be aborted.</td>
+</tr>
+<tr>
+<td>snapshotTransactionsEnabled</td>
+<td>true | false</td>
+<td>no</td>
+<td>no</td>
+<td>If true, snapshot transactions will be used. If false, they will not be used.</td>
+</tr>
+<tr>
+<td>timestampUtcEnabled</td>
+<td>true | false</td>
+<td>no</td>
+<td>no</td>
+<td>If true, timestamps will be converted to UTC. If false, UTC will not be used.</td>
+</tr>
+<tr>
+<td>timezone</td>
+<td>string</td>
+<td>yes</td>
+<td>yes</td>
+<td>Timezone of the session.</td>
+</tr>
+<tr>
+<td>timeZoneBehavior</td>
+<td>string</td>
+<td>yes</td>
+<td>yes</td>
+<td>Specifies the conversion behavior of UTC timestamps to local timestamps when the time value occurs during a time shift because of daylight saving time (TIME_ZONE_BEHAVIOR).</td>
+</tr>
+</tbody>
+</table>
+<p>Attributes are specified as an object of name/value pairs. Multiple attributes are separated by a comma.</p>
+<p>Attribute JSON format
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="c1">// name: value</span>
+<span class="w">     </span><span class="o">&lt;</span><span class="nx">string</span><span class="o">&gt;:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nx">number</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">false</span><span class="o">&gt;</span>
+<span class="w"> </span><span class="p">}</span>
+</code></pre></div></p>
+<h2 id="data-types-type-names-and-properties">Data Types: Type names and properties</h2>
+<p>The following data types and properties can be used to specify column
+types in the executePreparedStatement request.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Required Properties</th>
+<th>Optional Properties</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BOOLEAN</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>CHAR</td>
+<td>size</td>
+<td></td>
+</tr>
+<tr>
+<td>DATE</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>DECIMAL</td>
+<td>precision, scale</td>
+<td></td>
+</tr>
+<tr>
+<td>DOUBLE</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>GEOMETRY</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>INTERVAL DAY TO SECOND</td>
+<td>precision, fraction</td>
+<td></td>
+</tr>
+<tr>
+<td>INTERVAL YEAR TO MONTH</td>
+<td>precision</td>
+<td></td>
+</tr>
+<tr>
+<td>TIMESTAMP</td>
+<td></td>
+<td>withLocalTimeZone</td>
+</tr>
+<tr>
+<td>TIMESTAMP WITH LOCAL TIME ZONE</td>
+<td></td>
+<td>withLocalTimeZone</td>
+</tr>
+<tr>
+<td>VARCHAR</td>
+<td>size</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The following data types and properties are used to specify column
+types in responses from Exasol.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Properties</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BOOLEAN</td>
+<td></td>
+</tr>
+<tr>
+<td>CHAR</td>
+<td>size, characterSet</td>
+</tr>
+<tr>
+<td>DATE</td>
+<td>size</td>
+</tr>
+<tr>
+<td>DECIMAL</td>
+<td>precision, scale</td>
+</tr>
+<tr>
+<td>DOUBLE</td>
+<td></td>
+</tr>
+<tr>
+<td>GEOMETRY</td>
+<td>size, srid</td>
+</tr>
+<tr>
+<td>INTERVAL DAY TO SECOND</td>
+<td>size, precision, fraction</td>
+</tr>
+<tr>
+<td>INTERVAL YEAR TO MONTH</td>
+<td>size, precision</td>
+</tr>
+<tr>
+<td>TIMESTAMP</td>
+<td>size, withLocalTimeZone</td>
+</tr>
+<tr>
+<td>TIMESTAMP WITH LOCAL TIME ZONE</td>
+<td>size, withLocalTimeZone</td>
+</tr>
+<tr>
+<td>VARCHAR</td>
+<td>size, characterSet</td>
+</tr>
+</tbody>
+</table>
+<h2 id="compression">Compression</h2>
+<p>The data in the WebSocket data frames may be compressed using zlib. In
+order to enable compression, the client must set the <code>useCompression</code>
+field in the login command to true. If compression is enabled during
+login, all messages sent and received after login completion must be
+binary data frames, in which the payload data (i.e., command
+request/response) is zlib-compressed.</p>
+<h2 id="heartbeatfeedback-messages">Heartbeat/Feedback messages</h2>
+<p>The <code>feedbackInterval</code> session attribute specifies how often (in seconds)
+unidirectional heartbeat/feedback messages are sent to the client
+during query execution. These messages are sent using Pong WebSocket
+control frames (see RFC 6455), and thus a response is not expected.</p>
+<p>The client may send Ping WebSocket control frames (see RFC 6455) to
+Exasol, for example, as client-initiated keepalives. Exasol
+will respond to a Ping frame with a Pong response.</p>
+<p>Exasol will not send Ping frames to the client.</p>
+<h2 id="subconnections">Subconnections</h2>
+<h3 id="introduction">Introduction</h3>
+<p>Subconnections are additional connections to Exasol cluster nodes which can be created by the client. There are two main reasons to create and use subconnections.
+1. Read a result set in parallel: <a href="../commands/fetchV1/">fetch</a> can be called in parallel by each of the subconnections to read a result set.
+2. <code>INSERT</code> data in parallel: <a href="../commands/executePreparedStatementV1/">executePreparedStatement</a> can be called in parallel on each of the subconnections to <code>INSERT</code> various data. Please note that the same prepared statement (see <a href="../commands/createPreparedStatementV1/">createPreparedStatement</a>) must be executed on all subconnections.</p>
+<p>ℹ️ Here, parallel refers to the node-wise reading/inserting of data. For example, if there is a subconnection for each node (i.e., the number of subconnections equals the number of cluster nodes), then each subconnection will read/insert data locally from/into its node.</p>
+<p>Fetching a result set from Exasol can be done easily using the main connection. In this scenario, the Exasol cluster nodes will automatically send their data to the node which is connected to the client. This node then sends the combined data as a single result set. Thus, the client does not need to be aware of any data sharing/communication among the Exasol cluster nodes.</p>
+<p>However, for performance-critical scenarios, a significant performance gain can be acheived by using subconnections to fetch/insert data directly from/into multiple Exasol cluster nodes in parallel. Thus, instead of all the data going through the single main connection, the data can flow through multiple subconnections from/to different Exasol nodes in parallel.</p>
+<p>Please note that subconnections are only useful for multi-node Exasol clusters. With a single-node Exasol instance, the subconnection would basically be a duplicate of the main connection.</p>
+<h3 id="how-to-create-and-use-subconnections">How to create and use subconnections</h3>
+<p>Subconnections are created using the <a href="../commands/enterParallelV1/">enterParallel</a> command. The number of requested subconnections can be specified by the user, and the number of subconnections actually opened is given in the <a href="../commands/enterParallelV1/">enterParallel</a> response. Please note that the maximum number of subconnections is equal to the number of nodes in the Exasol cluster. For example, if the user has an eight-node cluster and requests 1,000 subconnections, only eight subconnections will be opened. As a general rule, the number of subconnections should usually be equal to the number of nodes in the Exasol cluster, which ensures one subconnection per node. After the subconnections have been created, the <a href="../commands/subLoginV1/">subLogin</a> command should be used to login to each subconnection. Note: Failing to login to all subconnections will cause the login to hang. After this, they are ready for use.</p>
+<p>⚠️ Please note: autocommit should be disabled before opening any subconnections. After closing the subconnections, it can be re-enabled.</p>
+<p>Any command can be executed on subconnections; however, there is a significant difference in <em>how</em> they can be executed. The only two commands which can be executed ansynchronously on subconnections (i.e., not executed on all subconnections at the same time) are <a href="../commands/fetchV1/">fetch</a> and <a href="../commands/executePreparedStatementV1/">executePreparedStatement</a>. All other commands are synchronous, meaning the same command must be executed on all subconnections at the same time. For example, if the <a href="../commands/executeV1/">execute</a> command is not called on all subconnections, the call will hang and eventually fail because of a time out.</p>
+<p>⚠️ Please note: different statements cannot be run in parallel using subconnections.</p>
+<p>After a subconnection is no longer needed, the <a href="../commands/disconnectV1/">disconnect</a> command should be called and the WebSocket for it closed as normal. Please note that subconnections can be reused for multiple statements.</p>
+<h3 id="example">Example</h3>
+<p>The following is an example of how to create, use, and close subconnections to fetch a result set from an executed prepared statement. If subconnections have already been created or are needed afterwards, the <a href="../commands/enterParallelV1/">enterParallel</a>, <a href="../commands/subLoginV1/">subLogin</a>, and <a href="../commands/disconnectV1/">disconnect</a> commands may be ignored.</p>
+<ol>
+<li>On main connection:</li>
+<li>
+<p>Create subconnections (<a href="../commands/enterParallelV1/">enterParallel</a>)</p>
+</li>
+<li>
+<p>On subconnections:</p>
+</li>
+<li>
+<p>Login to subconnection (<a href="../commands/subLoginV1/">subLogin</a>)</p>
+</li>
+<li>
+<p>On main connection:</p>
+</li>
+<li>
+<p>Execute prepared statement (<a href="../commands/executePreparedStatementV1/">executePreparedStatement</a>)</p>
+</li>
+<li>
+<p>On subconnections:</p>
+</li>
+<li>Get result set offset (<a href="../commands/getOffsetV1/">getOffset</a>)</li>
+<li>Fetch result set data using the offset (<a href="../commands/fetchV1/">fetch</a>)</li>
+<li>Close result set (<a href="../commands/closeResultSetV1/">closeResultSet</a>)</li>
+<li>
+<p>Disconnect (<a href="../commands/disconnectV1/">disconnect</a>)</p>
+</li>
+<li>
+<p>On main connection:</p>
+</li>
+<li>Close result set (<a href="../commands/closeResultSetV1/">closeResultSet</a>)</li>
+</ol>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2023 Exasol AG
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "search.highlight", "content.tabs.link", "content.code.copy"], "search": "../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a00a7c5e.min.js"></script>
+      
+    
+  </body>
+</html>
